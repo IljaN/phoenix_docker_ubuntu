@@ -1,0 +1,22 @@
+version: '2'
+services:
+  web:
+    build:
+      context: .
+      args:
+        VERSION: "${VERSION}"
+        APP_NAME: "docker_test"
+
+    links:
+          - "db:database"
+    ports:
+      - "8888:8888"
+    depends_on:
+      - db
+    #entrypoint: /app/bin/docker_test foreground
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
